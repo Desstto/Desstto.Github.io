@@ -1,3 +1,3 @@
 # Proyectos de informatica 
 
-- [Falla] (https://Nuevorepository2.githu.io/falla/) 
+- [Falla] (https://Nuevorepository2.github.io/falla/) 
