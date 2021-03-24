@@ -30,11 +30,28 @@
  // Mano
     var hand = new THREE.SphereGeometry(50);
 
-// Mano derecha
-    var right = new THREE.SphereGeometry(50);
-    right
-  
+// Mano derecha 
+    var rightHand = new THREE.Mesh(hand, cover);
+    rightHand.position.set(-150,0,0);
+    scene.add(rightHand);
 
+// Mano izquierda
+    var leftHand = new THREE.Mesh(hand, cover);
+    leftHand.position.set(150,0,0);
+    scene.add(leftHand);
+
+// Pie
+    var foot = new THREE.SphereGeometry(50);
+
+// Pie derecho
+    var rightFoot = new THREE.Mesh(foot,cover);
+    rightFoot.position.set(-75,-125,0);
+    scene.add(rightFoot);
+    
+// Pie izquierdo
+    var leftFoot = new THREE.Mesh(foot, cover);
+    leftFoot.position.set(75,-125,0);
+    scene.add(leftFoot);
 
 
   // Now, show what the camera sees on the screen:
