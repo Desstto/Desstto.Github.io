@@ -1,4 +1,4 @@
 # Proyectos de informatica 
 
 - [Falla](https://Desstto.Github.io/falla/) 
-- [Game](https://Desstto.Github.io/Game/)
+- [Game Azul] (https://Desstto.Github.io/game_azul/)
