@@ -64,7 +64,7 @@ function teclaApretada(e){
     }
     if (codigo == "KeyQ"){
         avatar.position.z -= 5;
-}
+    }
     if (codigo == "KeyO"){
         avatar.position.x -= 5;
     }
@@ -80,8 +80,10 @@ function teclaApretada(e){
     if (codigo == "KeyN") {
         velocidadGiro -= 0.01;
     }
+}
     
-
+var isCartWheeling = false;
+    
 function animate() {
     requestAnimationFrame(animate);
     
@@ -91,6 +93,7 @@ function animate() {
             velocidadGiro;
     }
     renderer.render(scene, camera);
-
+}
+    
 animate();
 </script>
