@@ -19,32 +19,53 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
-  var cubo = new THREE.BoxGeometry(500,20,300);
-  var cubo2 = new THREE.BoxGeometry(20,200,20);
-  var cubo3 = new THREE.BoxGeometry(20,200,20);
-  var cubo4 = new THREE.BoxGeometry(20,200,20);
-  var cubo5 = new THREE.BoxGeometry(20,200,20);
-  var material = new THREE.MeshNormalMaterial(flat);
-  var cubo_flat = new THREE.Mesh(cubo, material);
-  var cubo2_flat = new THREE.Mesh(cubo2,material);
-  var cubo3_flat = new THREE.Mesh(cubo3, material);
-  var cubo4_flat = new THREE.Mesh(cubo4, material);
-  var cubo5_flat = new THREE.Mesh(cubo5, material);
-  
-  scene.add(cubo_flat);
-  scene.add(cubo2_flat);
-  scene.add(cubo3_flat);
-  scene.add(cubo4_flat);
-  scene.add(cubo5_flat);
-  cubo_flat.rotation.set(0,0,0);
-  cubo2_flat.position.set(-220,-100,130);
-  cubo3_flat.position.set(220,-100,130);
-  cubo4_flat.position.set(220,-100,-100);
-  cubo5_flat.position.set(-220,-100,-100);
-  
-  camera.position.set(150,-50,500);
-  camera.lookAt(cubo_flat.position);
-  
+
+light2 = new THREE.DirectionalLight( 'white', 1 );
+light2.position.set( 100, 100, 10 );
+scene.add(light2);
+
+var body = new THREE.SphereGeometry(100);
+var cover = new THREE.MeshNormalMaterial();
+var brazo = new THREE.SphereGeometry(50)
+var cabeza = new THREE.SphereGeometry(80)
+var gorro = new THREE.CylinderGeometry(100,100,20,20);
+var cover = new THREE.MeshNormalMaterial(flat);
+var tube = new THREE.Mesh(gorro, cover);
+var ojos = new THREE.SphereGeometry(10)
+var cover = new THREE.MeshNormalMaterial();
+var eyes = new THREE.Mesh(ojos, cover);
+var eyes1 = new THREE.Mesh(ojos, cover);
+var eyes2 = new THREE.Mesh(ojos, cover);
+var bola1 = new THREE.Mesh(body, cover);
+var bola2 = new THREE.Mesh(body, cover);
+var bola3 = new THREE.Mesh(brazo, cover);
+var bola4 = new THREE.Mesh(brazo, cover);
+var bola5 = new THREE.Mesh(cabeza, cover);
+
+scene.add(bola1);
+scene.add(bola2);
+scene.add(bola3);
+scene.add(bola4);
+scene.add(bola5);
+scene.add(tube);
+scene.add(eyes);
+scene.add(eyes1);
+scene.add(eyes2);
+
+
+
+bola1.position.set(40,20,100);
+bola2.position.set(40,180,100);
+bola3.position.set(180,180,100);
+bola4.position.set(-100,180,100);
+bola5.position.set(40,380,100);
+tube.position.set(40,390,100);
+eyes.position.set(70,325,200);
+eyes1.position.set(35,320,200);
+eyes2.position.set(0,320,200);
+
+camera.lookAt(bola2.position);
+
   
 
 
