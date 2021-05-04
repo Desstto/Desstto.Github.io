@@ -71,17 +71,26 @@ function teclaApretada(e){
     if (codigo == "KeyP"){
         avatar.position.x += 5;
     } 
-  
-    if (codigo == "KeyC")
+    if (codigo == "KeyC"){
+        isCartWheeling = !isCartWheeling;
+    }
+    if (codigo == "KeyM") {
+        velocidadGiro += 0.01;
+    }
+    if (codigo == "KeyN") {
+        velocidadGiro -= 0.01;
+    }
     
+
 function animate() {
-    requestAnimationFrame(animate)
+    requestAnimationFrame(animate);
     
     //ANIMACION 
-    avatar.rotation.z = avatar.rotation.z + 0.05;
-    
+    if (isCartWheeling) {
+        avatar.rotation.z = avatar.rotation.z +
+            velocidadGiro;
+    }
     renderer.render(scene, camera);
-}
 
-animate()
+animate();
 </script>
