@@ -19,26 +19,32 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
-  
+  listaColision = [];
 // Cuerpo
     var body = new THREE.SphereGeometry(100);
     var cover = new THREE.MeshNormalMaterial(flat);
     var avatar = new THREE.Mesh(body,cover);
     
-    scene.add(avatar);
+    var marcador = new THREE.Object3D();
+    marcador.position.x = 300;
+    scene.add(marcador);
+    marcador.add(avatar);
+    marcador.add(camere);
+    
+    //scene.add(avatar);
     
  // Mano
     var hand = new THREE.SphereGeometry(50);
 
 // Mano derecha 
-    var rightHand = new THREE.Mesh(hand, cover);
-    rightHand.position.set(-150,0,0);
-    avatar.add(rightHand);
+    var righthand = new THREE.Mesh(hand, cover);
+    righthand.position.set(-150,0,0);
+    avatar.add(righthand);
 
 // Mano izquierda
-    var leftHand = new THREE.Mesh(hand, cover);
-    leftHand.position.set(150,0,0);
-    avatar.add(leftHand);
+    var lefthand = new THREE.Mesh(hand, cover);
+    lefthand.position.set(150,0,0);
+    avatar.add(lefthand);
 
 // Pie
     var foot = new THREE.SphereGeometry(50);
@@ -53,31 +59,57 @@
     leftFoot.position.set(75,-125,0);
     avatar.add(leftFoot);
 
-    let isCartWheeling = true; 
+    let isCartWheeling = false; 
     let velocidadGiro = 0.05;
 
-    function crearArbolEn(x,z) {
+    function crearArbol(x,z) {
         var tronco = new THREE.CylinderGeometry(50,50,200);
-        var textura = new 
-        THREE.MeshBasicMaterial({color:"sienna"});
-
-        var tronco_sienna = new THREE.Mesh(tronco, textura);
+        var marron = new THREE.MeshBasicMaterial({color:"sienna"});
+        var tronco_marron = new THREE.Mesh(tronco, marron);
 
         var copa = new THREE.SphereGeometry(150);
-        var textura_copa = new 
-        THREE.MeshBasicMaterial ({color:"forestgreen"});
-        var copa_textura = new THREE.Mesh(copa, textura_copa);
+        var verde = new THREE.MeshBasicMaterial ({color:"forestgreen"});
+        var copa_verde = new THREE.Mesh(copa, textura_copa);
 
-        copa_textura.position.y = 175;
-        tronco_sienna.add(copa_textura);
-        tronco_sienna.position.set(x, -75, z);
-        scene.add(tronco_sienna);
+        copa_verde.position.y = 175;
+        tronco_marron.add(copa_verde);
+        tronco_marron.position.set(x, -75, z);
+
+        var circulo = new THREE.CircleGeometry(300);
+        var invisible = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.5});
+        var limite = new THREE.Mesh(circulo, invisible);
+        limite.position.y = -100;
+        limite.rotation.x = -Math.PI/2;
+        tronco_marron.add(limite);
+
+        listaColision.push(limite);
+        scene.add(tronco_marron);
 
     }
 
-    crearArbolEn(0,-500);
-    crearArbolEn(250,-500);
-    crearArbolEn(450,-500);
+    function crearCampoAleatorio(numArboles) {
+        for(var i =0; i< numArboles;1++) {
+            var x = Math.random()*1000;
+            var z = Math.random()*1000;
+            crearArbol(x,z);
+        }
+    }
+
+    function crearFilaArbol(z, minimo_x, maximo_x paso_x) {
+        for (var x=minimo_x; x<maximo_x; x=x+paso_x) {
+            crearArbol(x,z);
+        }
+    }
+    function crearCampoArboles(minimo_x, minimo_z, maximo_x, maximo_z, paso) {
+        for (var z=minimo_z; z<maximo_z; z=z+paso) {
+            crearFilaArbol(z, minimo_x, maximo_x, paso);
+        }
+    }
+
+    //crearFilaArbol(0,-5000,5000,500)
+
+    //crearCampoAleatorio(1000, 5000, 10000);
+    crearCampoArboles(-5000, -5000, 5000, 5000, 1000)
 
 document.addEventListener("keydown", teclaApretada);
 
@@ -108,8 +140,31 @@ function teclaApretada(e){
     }
 }
     
+function avanzar (direccion) {
+    direccion += Math.PI/2;
+    console.log("Radianes:" + direccion);
+    console.log("Grados:" + direccion*180/Math.PI);
+    console.log("Sen(direccion):" + Math.sin(direccion));
+    console.log("Cos(direccion):" + Math.cos(direccion));
 
+    if(avatarColisiona()) {
+        marcador.position.z -= 20*Math.sin(direccion);
+        marcador.position.x += 20*Math.cos(direccion);
+    }
     
+
+}
+    
+function avatarColisiona() {
+    var vector = new THREE.Vector3(0,-1,0);
+    var raycaster = new THREE.Raycaster(marcador.position, vector);
+    var intersectados = raycaster.intersectObjects(listaColision);
+
+    if (intersectados.length > 0) return true;
+
+}
+
+
 function animate() {
     requestAnimationFrame(animate);
     
